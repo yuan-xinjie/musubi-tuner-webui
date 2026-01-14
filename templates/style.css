@@ -1,0 +1,442 @@
+/* --- DARK TECH THEME (FINAL) --- */
+:root {
+    --bg-color: #050505;
+    --panel-bg: rgba(255, 255, 255, 0.03);
+    --border-color: #2a2f3a;
+    --neon-blue: #00f3ff;
+    --neon-orange: #ff9d00;
+    --text-primary: #e0e6ed;
+    --text-muted: #6b7280;
+    --input-bg: #111;
+    --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    margin: 0;
+    height: 100vh;
+    overflow-y: auto; 
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+.layout-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.brand h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.control-group label {
+    color: var(--neon-blue);
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#master-profile-select {
+    padding: 6px 12px;
+    background: var(--neon-blue);
+    color: #000;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: var(--font-mono);
+}
+
+.btn-save {
+    background: transparent;
+    border: 1px solid var(--neon-orange);
+    color: var(--neon-orange);
+    padding: 6px 20px;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.9rem;
+}
+.btn-save:hover {
+    background: var(--neon-orange);
+    color: #000;
+    box-shadow: 0 0 10px var(--neon-orange);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+.status-dot {
+    width: 6px; height: 6px;
+    background: #0f0;
+    border-radius: 50%;
+    margin-right: 6px;
+    box-shadow: 0 0 5px #0f0;
+}
+
+/* Dashboard */
+.mission-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mission-row {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.mission-row:hover {
+    border-color: var(--neon-blue);
+    background: rgba(0, 243, 255, 0.02);
+}
+
+.mission-name {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.mission-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.action-group-left, .action-group-right {
+    display: flex;
+    gap: 10px;
+}
+
+.v-sep {
+    width: 1px;
+    height: 20px;
+    background: var(--border-color);
+}
+
+.btn-card {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 6px 15px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    transition: 0.2s;
+}
+.btn-card:hover { border-color: var(--neon-blue); color: var(--neon-blue); }
+.btn-card.danger:hover { border-color: #ff4444; color: #ff4444; }
+
+.btn-exec {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    padding: 6px 15px;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.2s;
+}
+.btn-exec:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,0.1); }
+.btn-exec.primary { border-color: var(--neon-orange); color: var(--neon-orange); }
+.btn-exec.primary:hover { background: var(--neon-orange); color: #000; }
+
+.footer-bar {
+    margin-top: 40px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    text-align: center;
+}
+
+.btn-create-task {
+    background: var(--neon-blue);
+    color: #000;
+    border: none;
+    padding: 15px 40px;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+    transition: 0.2s;
+}
+.btn-create-task:hover { box-shadow: 0 0 25px rgba(0, 243, 255, 0.5); transform: scale(1.02); }
+
+/* Console */
+.console-window {
+    background: #000;
+    border: 1px solid var(--neon-blue);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+}
+
+.console-header {
+    background: rgba(0, 243, 255, 0.1);
+    border-bottom: 1px solid var(--neon-blue);
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--neon-blue);
+    font-size: 0.8rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+#console-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    margin: 0;
+    font-family: 'Consolas', monospace;
+    font-size: 0.85rem;
+    color: #0f0;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.console-input-bar {
+    display: flex;
+    border-top: 1px solid #333;
+    flex-shrink: 0;
+}
+.console-input {
+    flex: 1;
+    background: #111;
+    border: none;
+    color: #fff;
+    padding: 8px;
+    font-family: 'Consolas', monospace;
+}
+.console-input:focus { outline: none; }
+.btn-send {
+    background: #333;
+    border: none;
+    color: #fff;
+    padding: 0 15px;
+    cursor: pointer;
+}
+.btn-send:hover { background: #555; }
+
+/* Editor Fields */
+.grid-3-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.col-group, .bottom-section {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+}
+
+.group-title {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.field-item { margin-bottom: 10px; }
+.field-label { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 4px; }
+
+input[type="text"], select[data-type="select"] {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--neon-blue);
+    padding: 6px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    transition: 0.2s;
+    margin: 0; 
+}
+input:focus, select:focus { border-color: var(--neon-blue); outline: none; }
+
+.switch-row { display: flex; align-items: center; height: 30px; }
+.field-label-inline { margin-left: 10px; font-size: 0.75rem; color: var(--text-primary); }
+.tech-switch { position: relative; display: inline-block; width: 32px; height: 16px; margin: 0; }
+.tech-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--input-bg); border: 1px solid var(--border-color); transition: .3s; }
+.slider:before { position: absolute; content: ""; height: 10px; width: 10px; left: 2px; bottom: 2px; background-color: var(--text-muted); transition: .3s; }
+input:checked + .slider { border-color: var(--neon-blue); }
+input:checked + .slider:before { transform: translateX(16px); background-color: var(--neon-blue); }
+.flex-row-switches { display: flex; gap: 20px; align-items: center; }
+
+/* Grid Compact Row */
+.grid-compact-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 15px; 
+    width: 100%;
+    align-items: end; 
+}
+.field-item.compact { margin-bottom: 0; width: 100%; min-width: 0; }
+.field-item.compact .field-label { text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.65rem; }
+.field-item.compact input, .field-item.compact select { text-align: center; padding: 6px 2px; font-size: 0.8rem; height: 30px; }
+
+/* Dataset Section */
+.dataset-section {
+    background: var(--panel-bg);
+    border: 1px solid var(--neon-blue);
+    padding: 15px 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.05);
+}
+#toml-filename, #txt-filename { color: var(--neon-blue); font-family: var(--font-mono); }
+#dataset-loading, #sample-loading { color: var(--neon-orange); text-align: center; padding: 20px; animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: 0.5; } }
+
+.grid-dataset {
+    display: flex; gap: 15px; width: 100%; align-items: flex-end;
+}
+.dataset-item { flex: 1; margin-bottom: 0; min-width: 100px; }
+.dataset-item.small-field { flex: 0 0 70px; }
+.dataset-item.small-field input { text-align: center; }
+.dataset-item.res-field { flex: 0 0 140px; }
+.res-inputs {
+    display: flex; align-items: center; background: var(--input-bg);
+    border: 1px solid var(--border-color); padding: 0 5px; height: 31px;
+}
+.res-inputs input {
+    border: none !important; padding: 6px 0 !important; text-align: center; width: 100%; background: transparent;
+    color: var(--neon-blue); font-family: var(--font-mono); font-weight: bold;
+}
+.res-x { color: var(--text-muted); font-size: 0.8rem; padding: 0 4px; }
+.dataset-item .field-label { font-size: 0.65rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; text-align: center; }
+.dataset-item:not(.small-field):not(.res-field) input { text-align: left; }
+
+/* Sample Section */
+.sample-item {
+    background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); padding: 10px; margin-bottom: 10px; transition: 0.2s;
+}
+.sample-item:hover { border-color: var(--neon-orange); background: rgba(255, 157, 0, 0.05); }
+.sample-row-top { display: flex; gap: 10px; margin-bottom: 8px; }
+.sample-prompt {
+    flex: 1; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary);
+    padding: 8px; font-family: var(--font-mono); font-size: 0.9rem; min-height: 40px; resize: vertical;
+}
+.sample-prompt:focus { border-color: var(--neon-blue); outline: none; }
+.btn-delete {
+    background: transparent; border: 1px solid #ff4444; color: #ff4444; font-family: var(--font-mono);
+    cursor: pointer; padding: 0 10px; font-weight: bold; font-size: 0.8rem; transition: 0.2s;
+}
+.btn-delete:hover { background: #ff4444; color: #000; }
+.sample-row-bottom { display: flex; flex-wrap: wrap; gap: 10px; }
+.sample-param { display: flex; flex-direction: column; }
+.sample-param label { font-size: 0.65rem; color: var(--text-muted); margin-bottom: 2px; }
+.sample-param input {
+    background: var(--input-bg); border: 1px solid var(--border-color); color: var(--neon-orange);
+    padding: 4px; font-family: var(--font-mono); font-size: 0.8rem; text-align: center; width: 100%;
+}
+.sample-param.ci-param input { text-align: left; color: var(--neon-blue); font-size: 0.75rem; }
+.sample-param.ci-param label { color: var(--neon-blue); }
+.add-sample-btn {
+    text-align: center; border: 2px dashed var(--border-color); padding: 10px; color: var(--text-muted);
+    cursor: pointer; font-weight: bold; margin-top: 15px; transition: 0.2s;
+}
+.add-sample-btn:hover { border-color: var(--neon-orange); color: var(--neon-orange); background: rgba(255, 157, 0, 0.05); }
+/* 新增：返回按钮样式 */
+.btn-back {
+    background: transparent;
+    border: 1px solid var(--neon-blue);
+    color: var(--neon-blue);
+    padding: 8px 20px;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.btn-back:hover {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+/* 新增：Input Group (输入框 + 选择按钮) */
+.input-group {
+    display: flex;
+    width: 100%;
+}
+
+.input-group input {
+    border-right: none;
+    flex: 1; /* 占据剩余空间 */
+    /* 移除原有 margin 以便紧贴 */
+    margin: 0; 
+}
+
+.btn-folder {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-left: none;
+    color: var(--neon-blue);
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.2s;
+}
+
+.btn-folder:hover {
+    background: rgba(0, 243, 255, 0.1);
+    border-color: var(--neon-blue);
+}
+
+/* 针对 dataset-item 中的特殊处理 */
+.dataset-item:not(.small-field):not(.res-field) .input-group {
+    /* 确保在 flex 布局中也占满 */
+    width: 100%;
+}

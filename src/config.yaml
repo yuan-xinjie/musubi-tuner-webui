@@ -1,0 +1,134 @@
+qwen:
+
+  global_config:
+    logging_dir: "./logs"
+    flash_attn: true
+    sdpa: false
+    split_attn: true
+    guidance_scale: 1
+    network_args: true
+    network_module: networks.lora_qwen_image
+    lr_scheduler: cosine_with_min_lr
+    lr_scheduler_num_cycles: 1
+    lr_decay_steps: 0.2
+    lr_scheduler_min_lr_ratio: 0.1
+    cuda_allow_tf32: true
+    cuda_cudnn_benchmark: true
+    mixed_precision: bf16
+    fp8_base: true
+    fp8_scaled: true
+    persistent_data_loader_workers: true
+    use_pinned_memory_for_block_swap: true
+    compile: true
+    compile_backend: inductor
+    compile_mode: max-autotune-no-cudagraphs
+    compile_dynamic: auto
+    compile_cache_size_limit: 32
+    img_in_txt_in_offloading: true
+
+  cache:
+    vae_tiling: true
+    vae_chunk_size: 32
+    vae_spatial_tile_sample_min_size: 256
+    fp8_vl: false
+    batch_size: 16
+
+  face:
+    output_name: face
+    output_dir: ./output/face
+    sample_prompts: ./src/face.json
+    max_train_epochs: '20'
+    save_every_n_epochs: '2'
+    sample_every_n_epochs: '2'
+    dim_from_weights: false
+    dataset_config: ./src/face.json
+    gradient_checkpointing: true
+    gradient_checkpointing_cpu_offload: false
+    optimizer_type: adamw
+    learning_rate: '2e-5'
+    timestep_sampling: qwen_shift
+    loraplus_lr_ratio: ''
+    network_dim: '32'
+    network_alpha: '16'
+    blocks_to_swap: '16'
+    lora: Qwen-Image-Edit-2511
+    model_version: edit-2511
+    dit: 'D:/models/diffusion_models/qwen_image_edit_2511_bf16.safetensors'
+    vae: 'F:/Tools/qinglong-trainer-9.3/ckpts/vae/qwen_image_vae.safetensors'
+    text_encoder: 'D:/models/text_encoders/qwen_2.5_vl_7b.safetensors'
+
+  aaa:
+    output_name: aaa
+    output_dir: ./output/aaa
+    sample_prompts: ./src/aaa.json
+    max_train_epochs: 40
+    save_every_n_epochs: 2
+    sample_every_n_epochs: 2
+    dim_from_weights: false
+    dataset_config: ./src/aaa.json
+    gradient_checkpointing: true
+    gradient_checkpointing_cpu_offload: false
+    optimizer_type: adamw
+    learning_rate: 0.0001
+    timestep_sampling: qinglong_qwen
+    loraplus_lr_ratio: '4'
+    network_dim: 32
+    network_alpha: 16
+    blocks_to_swap: 16
+    lora: Qwen-Image
+    model_version: original
+    dit: 'D:/models/diffusion_models/qwen_image_bf16.safetensors'
+    vae: 'F:/Tools/qinglong-trainer-9.3/ckpts/vae/qwen_image_vae.safetensors'
+    text_encoder: 'D:/models/text_encoders/qwen_2.5_vl_7b.safetensors'
+
+  test1:
+    output_name: test1
+    output_dir: ./output/test1
+    max_train_epochs: '40'
+    save_every_n_epochs: '2'
+    sample_every_n_epochs: '2'
+    dim_from_weights: false
+    dit: D:/models/diffusion_models/qwen_image_bf16.safetensors
+    vae: D:/models/vae/qwen_image_vae.safetensors
+    text_encoder: D:/models/text_encoders/qwen_2.5_vl_7b.safetensors
+    gradient_checkpointing: true
+    gradient_checkpointing_cpu_offload: false
+    optimizer_type: adamw
+    learning_rate: '0.0001'
+    timestep_sampling: qwen_shift
+    loraplus_lr_ratio: '3'
+    network_dim: '32'
+    network_alpha: '32'
+    blocks_to_swap: '16'
+    lora: Qwen-Image-Edit-2509
+    model_version: edit-2509
+    dataset_config: ./src/test1.json
+    sample_prompts: ./src/test1.json
+z-image:
+  text_encoder: ""
+  timestep_sampling: "qinglong_flux"
+  save_every_n_epochs: 2
+  sample_every_n_epochs: 1
+  sample_prompts: ""
+  training_comment: "describe something..."  # lora简介
+  max_train_epochs: 60
+  network_dim: 32
+  network_alpha: 16
+
+  flash_attn: false
+  split_attn: true
+  network_args: true
+  loraplus_lr_ratio: 4
+  network_module: networks.lora_zimage
+  lr_scheduler: cosine_with_min_lr
+  lr_scheduler_num_cycles: 1
+  lr_decay_steps: 0.2
+  lr_scheduler_min_lr_ratio: 0.1
+  cuda_allow_tf32: true
+  cuda_cudnn_benchmark: true
+  mixed_precision: bf16
+  persistent_data_loader_workers: true
+  img_in_txt_in_offloading: true
+  optimizer_type: adv_optm.AdamW_adv
+  optimizer_args: true
+  grams_moment: false

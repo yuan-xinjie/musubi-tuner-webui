@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MUSUBI TUNER // DASHBOARD</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="layout-container dashboard-container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="brand">
+                <h1>MUSUBI<span style="color:var(--text-muted)">//</span>DASHBOARD</h1>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot"></div><span id="sys-status">SYSTEM READY</span>
+            </div>
+        </header>
+
+        <!-- 常驻控制台 -->
+        <div id="console-window" class="console-window" style="display:none;">
+            <div class="console-header">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span>TERMINAL_OUTPUT</span>
+                    <button id="stop-btn" onclick="stopTask()" class="btn-mini btn-danger" style="display:none;">[ STOP TASK ]</button>
+                </div>
+            </div>
+            <pre id="console-content"></pre>
+            <div class="console-input-bar">
+                <input type="text" id="cmd-input" class="console-input" placeholder="Type command...">
+                <button class="btn-send" onclick="sendConsoleCmd()">SEND</button>
+            </div>
+        </div>
+
+        <!-- 任务列表 -->
+        <div class="dashboard-content">
+            <div class="group-title">AVAILABLE MISSIONS</div>
+            <div id="mission-list" class="mission-list">
+                <div class="loading-text">SCANNING...</div>
+            </div>
+        </div>
+
+        <footer class="footer-bar">
+            <button class="btn-create-task" onclick="createNewTask()">[ + INITIALIZE NEW MISSION ]</button>
+        </footer>
+    </div>
+
+    <script src="/dashboard.js"></script>
+</body>
+</html>

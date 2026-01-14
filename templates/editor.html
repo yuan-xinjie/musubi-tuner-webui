@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MUSUBI TUNER // EDITOR</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="layout-container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-left">
+                <button class="btn-back" onclick="window.location.href='/'">
+                    &lt; DASHBOARD
+                </button>
+                <div class="brand" style="margin-left: 20px;">
+                    <h1>MISSION: <span id="display-task-name" style="color:var(--neon-blue)">
+                        {% if task_name == '__NEW__' %} NEW MISSION {% else %} {{ task_name }} {% endif %}
+                    </span></h1>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <div class="control-group">
+                    <label>CORE PROFILE</label>
+                    <select id="master-profile-select">
+                        <option value="Qwen-Image">Qwen-Image</option>
+                        <option value="Qwen-Image-2512">Qwen-Image-2512</option>
+                        <option value="Qwen-Image-Edit">Qwen-Image-Edit</option>
+                        <option value="Qwen-Image-Edit-2509">Qwen-Image-Edit-2509</option>
+                        <option value="Qwen-Image-Edit-2511">Qwen-Image-Edit-2511</option>
+                        <option value="Z-Image-Turbo">Z-Image-Turbo</option>
+                    </select>
+                </div>
+                <button class="btn-save" id="save-btn" onclick="submitConfig()">[ SAVE MISSION ]</button>
+            </div>
+        </header>
+
+        <form id="config-form">
+            {% macro render_field(key, label_override=None, compact=False) %}
+                {% set label = label_override if label_override else key.split('.')[-1] | upper %}
+                
+                <!-- [修改] 隐藏特定字段，但渲染结构以便 JS 查找 name -->
+                <div class="field-item {% if compact %}compact{% endif %}" 
+                     {% if key in ['qwen.dataset_config', 'qwen.sample_prompts'] %}style="display:none;"{% endif %}>
+                     
+                    {% if key in ['qwen.dim_from_weights', 'qwen.gradient_checkpointing', 'qwen.gradient_checkpointing_cpu_offload'] %}
+                        <div class="switch-row">
+                            <label class="tech-switch">
+                                <input type="checkbox" name="{{ key }}" data-type="bool">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="field-label-inline">{{ label }}</span>
+                        </div>
+                    {% else %}
+                        <div class="field-label">{{ label }}</div>
+                        {% if key in options %}
+                            <select name="{{ key }}" data-type="select">
+                                {% for opt in options[key] %}
+                                    <option value="{{ opt }}">{{ opt }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <input type="text" name="{{ key }}" value="" placeholder="...">
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endmacro %}
+
+            <div class="grid-3-col">
+                <div class="col-group">
+                    <div class="group-title">GENERAL</div>
+                    {{ render_field('qwen.output_name') }}
+                    {{ render_field('qwen.training_comment') }}
+                    {{ render_field('qwen.output_dir') }}
+                    {{ render_field('qwen.sample_prompts') }} <!-- Hidden via Macro -->
+                </div>
+                <div class="col-group">
+                    <div class="group-title">TRAINING FLOW</div>
+                    {{ render_field('qwen.max_train_epochs') }}
+                    {{ render_field('qwen.save_every_n_epochs') }}
+                    {{ render_field('qwen.sample_every_n_epochs') }}
+                    {{ render_field('qwen.network_weights') }}
+                    {{ render_field('qwen.dim_from_weights', 'DIM_FROM_WEIGHTS') }}
+                </div>
+                <div class="col-group">
+                    <div class="group-title">MODEL COMPONENTS</div>
+                    {{ render_field('qwen.dataset_config') }} <!-- Hidden via Macro -->
+                    {{ render_field('qwen.dit') }}
+                    {{ render_field('qwen.vae') }}
+                    {{ render_field('qwen.text_encoder') }}
+                    <div class="flex-row-switches">
+                        {{ render_field('qwen.gradient_checkpointing', 'GRAD_CHK') }}
+                        {{ render_field('qwen.gradient_checkpointing_cpu_offload', 'CPU_OFF') }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-section">
+                <div class="group-title">ADVANCED PARAMETERS</div>
+                <div class="grid-compact-row">
+                    {{ render_field('qwen.optimizer_type', compact=True) }}
+                    {{ render_field('qwen.learning_rate', compact=True) }}
+                    {{ render_field('qwen.timestep_sampling', compact=True) }}
+                    {{ render_field('qwen.loraplus_lr_ratio', compact=True) }}
+                    {{ render_field('qwen.network_dim', compact=True) }}
+                    {{ render_field('qwen.network_alpha', compact=True) }}
+                    {{ render_field('qwen.blocks_to_swap', compact=True) }}
+                </div>
+            </div>
+
+            <div class="dataset-section" id="dataset-ui">
+                <div class="group-title">DATASET CONFIGURATION (<span id="toml-filename">LOADING...</span>)</div>
+                <div id="dataset-loading">READING...</div>
+                <div id="dataset-fields" style="display:none;"><div class="grid-dataset"></div></div>
+            </div>
+
+            <div class="dataset-section" id="sample-ui" style="border-color: var(--neon-orange);">
+                <div class="group-title" style="color: var(--neon-orange);">SAMPLE PARAMETERS (<span id="txt-filename">LOADING...</span>)</div>
+                <div id="sample-loading">READING SAMPLES...</div>
+                <div id="sample-container" style="display:none;">
+                    <div id="sample-list"></div>
+                    <div class="add-sample-btn" onclick="addSampleItem()">+ ADD PROMPT</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <input type="hidden" id="current-task-id" value="{{ task_name }}">
+    <script src="/editor.js"></script>
+</body>
+</html>

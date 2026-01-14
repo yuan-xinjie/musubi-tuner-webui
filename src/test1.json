@@ -1,0 +1,36 @@
+{
+  "general": {
+    "enable_bucket": true,
+    "bucket_no_upscale": false,
+    "batch_size": 1,
+    "caption_extension": ".txt",
+    "num_repeats": 10
+  },
+  "datasets": [
+    {
+      "resolution": [
+        1024,
+        1024
+      ],
+      "image_directory": "./dataset/target",
+      "control_directory": "./dataset/ctrl",
+      "cache_directory": "./dataset/target/cache",
+      "qwen_image_edit_no_resize_control": false,
+      "qwen_image_edit_control_resolution": [
+        1024,
+        1024
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "prompt": "Replace face...",
+      "width": 1024,
+      "height": 1024,
+      "seed": 42,
+      "guidance_scale": 3,
+      "sample_steps": 25,
+      "discrete_flow_shift": 3
+    }
+  ]
+}
